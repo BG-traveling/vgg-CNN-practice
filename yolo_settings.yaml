@@ -1,0 +1,6 @@
+path : C:\kdh\머신러닝, 딥러닝\로컬1일차_샘플\Data\PeachDataset\YoloDataset
+train : images/train
+val : images/valid
+
+names:
+  0 : peach

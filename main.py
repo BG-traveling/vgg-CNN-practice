@@ -1,22 +1,44 @@
 #라벨만들기 위한 os, json
-import os, json
+import os, json, re
 import matplotlib.pyplot as plt
+
+#비전 관련 작업 cv로 진행할 때, numpy를 함께 임포트
 import cv2
-import re
+import numpy as np
 
+import shutil #.sh / .bash 
+
+from Utils.visualize import show_yolo_label
+from Preprocessing.yolo_preprocessing import label_from_json, label_from_txt, create_yolo_label, move_datas, move_label_datas
+from Utils import augmentation as aug
+
+
+# 생성 구조 (Ultralytics 표준):
+#   Data/PeachDataset/yolo_dataset/
+#     images/train/*.jpg
+#     images/valid/*.jpg
+#     labels/train/*.txt
+#     labels/valid/*.txt
+
+#YOLO 기술문서
+#https://docs.ultralytics.com/modes/train,,
 if __name__ == '__main__':
-    sample_label_path = r'C:\kdh\머신러닝, 딥러닝\로컬1일차_샘플\Data\PeachDataset\peach_label\A220120XX_10306.json'
+    #실행 연습
+    # fig, ax = plt.subplots(1, 2)
+    # image = r'./Data/PeachDataset/peach_image/train/A220120XX_10306.jpg'
+    # image = cv2.imread(image)
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    # ax[0].imshow(image)
+    # image, label = aug.flip_horizontal(image, None)
+    # ax[1].imshow(image)
+    # plt.show()
+    # print(label)
 
-    with open(sample_label_path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-        words = []
+    aug.pipe_augmentation()
 
-        for line in lines:
-            #공백제거
-            parts = line.strip().split()
-            words.append([re.sub(r'[^a-zA-Z0-9.]', '', x) for x in parts])
-        print(words)
-            
+
+
+
 
 
 #딥러닝 시퀀스
