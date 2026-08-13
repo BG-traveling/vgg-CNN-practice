@@ -11,7 +11,7 @@ import shutil #.sh / .bash
 from Utils.visualize import show_yolo_label
 from Preprocessing.yolo_preprocessing import label_from_json, label_from_txt, create_yolo_label, move_datas, move_label_datas
 from Utils import augmentation as aug
-
+import albumentations as A  # Same import!
 
 # 생성 구조 (Ultralytics 표준):
 #   Data/PeachDataset/yolo_dataset/
@@ -34,9 +34,27 @@ if __name__ == '__main__':
     # plt.show()
     # print(label)
 
-    aug.pipe_augmentation()
+    # aug.pipe_augmentation()
 
+    # Declare an augmentation pipeline
+    transform = A.Compose([
+        A.RandomCrop(width=256, height=256),
+        A.HorizontalFlip(p=0.5),
+        A.RandomBrightnessContrast(p=0.2),
+    ])
 
+    image = r'./Data/YoloAugmentation/images/train/A220120XX_10306.jpg'
+
+    # Read an image with OpenCV and convert it to the RGB colorspace
+    image = cv2.imread(image)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    # Augment an image
+    transformed = transform(image=image)
+    transformed_image = transformed["image"]
+
+    plt.imshow(transformed_image)
+    plt.show()
 
 
 

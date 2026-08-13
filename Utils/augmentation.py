@@ -69,10 +69,10 @@ def load_yolo_label(label_path):
         return boxes
 
 def save_yolo_label(label_path, labels):
-     lines = [f'{cls}   {cx:.6f}    {cy:.6f}    {w:.6f}     {h:.6f}' for cls, cx, cy, w, h in labels]
+    lines = [f'{cls}   {cx:.6f}    {cy:.6f}    {w:.6f}     {h:.6f}' for cls, cx, cy, w, h in labels]
 
-     with open(label_path, 'w') as f:
-          f.write('\n'.join(lines))
+    with open(label_path, 'w') as f:
+        f.write('\n'.join(lines))
 
 
 #최종 증강 파이프라인
@@ -102,9 +102,9 @@ def pipe_augmentation(n=3):
         #1장의 이미지-라벨 쌍에 대하여 n번의 증강
         for i in range(n):
             augmented_image, augmented_label = augmentation_image(image, label)
-            out_name = f'{filename}_{n}'
+            out_name = f'{filename}_{i}'
             cv2.imwrite(str(image_dir/f'{out_name}.jpg'), augmented_image)
-            save_yolo_label(label_dir/f'{filename}.txt', augmented_label)
+            save_yolo_label(label_dir/f'{out_name}.txt', augmented_label)
             
         break
 
